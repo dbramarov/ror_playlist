@@ -1,0 +1,50 @@
+<h1>Welcome, <%= @user.first_name %> <%= @user.last_name %>!</h1>
+
+<form style="display: inline-block;" action="/users/logout" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Log Out">
+</form>
+
+<hr>
+
+<p>All the songs in our hub:</p>
+
+<table>
+	<tr>
+		<th>Artist</th>
+		<th>Title</th>
+		<th>Number of times added</th>
+		<th>Add to playlist</th>
+	</tr>
+	<% @songs.each do |song| %>
+	<tr>
+		<td><%= song.artist %></td>
+		<td><a href="/songs/<%= song.id %>"><%= song.title %></td>
+		<td><%= song.count %></td>
+		<td>
+			<form style="display: inline-block;" action="/count/<%= song.id %>" method="post">
+			    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			    <input type="submit" value="Add">
+			</form>
+		</td>
+	</tr>
+	<% end %>
+</table>
+
+
+<h3>Add a song:</h3>
+
+	<% if flash[:errors] %>
+	  	<% flash[:errors].each do |err| %>
+	  		<p style="color: red;"><%= err %></p>
+	  	<% end %>	
+	<% end %>
+
+<form style="display: inline-block;" action="/add" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <p>Title: <input type="text" name="title" required></p>
+    <p>Artist: <input type="text" name="artist" required></p>
+    <input type="submit" value="Add Song">
+</form>
+

@@ -1,0 +1,29 @@
+<form style="display: inline-block;" action="/users/logout" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Log Out">
+</form>
+
+<form style="display: inline-block;" action="/songs" method="get">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="submit" value="Dashboard">
+</form>
+
+<hr>
+
+<h1><%= @user.first_name %> <%= @user.last_name %>'s Playlist</h1>
+
+<table>
+	<tr>
+		<th>Artist</th>
+		<th>Title</th>
+		<th>Times Added</th>
+	</tr>
+	<tr>
+	<% @fav.each do |x| %>
+		<td><%= x.artist%></td>
+		<td><%= x.title%></td>
+		<td><%= x.faves_count%></td>
+	</tr>
+	<% end %>
+</table>
